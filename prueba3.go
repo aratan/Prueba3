@@ -353,16 +353,22 @@ func main() {
 	mux.HandleFunc("/files",uploader) //2. parte
 
 
+port := os.Getenv("PORT")
+
+if port ==""{
+port = "8000"
+}
+
 // escuchando
 server := &http.Server{
-	Addr: 			":8000",
+	Addr: 			":"+port,
 	Handler:		mux,
 	ReadTimeout:	10 * time.Second,
 	WriteTimeout:	10 * time.Second,
 	MaxHeaderBytes: 1 << 20,
 }
 
-log.Println("Server Active port: 8000 ")
+log.Println("Server Active port: "+port)
 log.Fatal(server.ListenAndServe())
 
 }
